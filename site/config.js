@@ -23,13 +23,5 @@ const config = {
   projectId: '[PROJECT_ID]'
 };
 
-const hrTenantId = '[HR_TENANT_ID]';
 const customerServiceTenantId = '[CUSTOMER_SERVICE_TENANT_ID]';
-
-// [START multi_tenant_cloud_firestore_database_with_identity_platform_firebase_app_setup]
-function configureFirebaseApp(tenant) {
-  firebase.initializeApp(config);
-  firebase.auth().tenantId = tenant;
-}
-// [END multi_tenant_cloud_firestore_database_with_identity_platform_firebase_app_setup]
 

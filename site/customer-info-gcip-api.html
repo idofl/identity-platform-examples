@@ -1,0 +1,35 @@
+<!doctype html>
+<!--
+Copyright 2020 Google Inc. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License");
+-->
+<html>
+  <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="config.js"></script>
+  <script src="gcip-auth-helper.js"></script>
+  <script defer src="customer-info-gcip-api.js"></script>
+
+  <style type="text/css">
+    .tab { margin-left: 40px; }
+  </style>
+
+  <body>
+    <h1>Customer Service - Customer Information</h1>
+    <div class="tab">
+      <div id="logged-out">
+        <h2>You must sign-in to see your customer information</h2>        
+        <div><button id="signInApi">Sign in with Google</button></div>
+      </div>
+      <div id="logged-in">
+        <div class="form-group">
+          <button id="sign-out">Sign out</button> 
+        </div>
+      </div>
+      <div id="customer-information" class="form-group">
+        <h1>Customer information:</h1>
+        <div id="output"></div>
+      </div>
+    </div>
+  </body>
+</html>

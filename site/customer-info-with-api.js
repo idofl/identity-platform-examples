@@ -16,14 +16,18 @@
 
 const gcipAuthHelper = new GcipAuthHelper(config.apiKey, window.location.href.replace(window.location.pathname,''));
 
-$('#signInApi').click((event) => {
-  //gcipAuthHelper.signInWithPopup(customerServiceTenantId, 'google.com');
-  gcipAuthHelper.signInWithRedirect(customerServiceTenantId, 'google.com');
+$('#sign-in').click((event) => {
+  //gcipAuthHelper.signInWithPopup('google.com');
+  gcipAuthHelper.signInWithRedirect('google.com');
 });
 
 gcipAuthHelper.onSignedIn(function(user) {
-  showSignOut();  
-  showCustomerInformation(user.email, gcipAuthHelper.getIdToken());
+  showSignOut();
+  $('#email').val(user.email);  
+});
+
+$('#queryInfo').click(function(event) {
+  showCustomerInformation($('#email').val(), gcipAuthHelper.getIdToken());
 });
 
 $('#sign-out').click(function(event) {
@@ -61,16 +65,19 @@ function showCustomerInformation(userEmail, idTokenPromise) {
         },
         contentType: 'application/json',
         method: 'GET'
-      }))
-  .then(response => response.json())
-  .then(data => {
-      var fields = data.fields;
-      $('#output').append($('<p>').text(`Email: ${userEmail}`));
-      $('#output').append($('<p>').text(`Name: ${fields.name.stringValue}`));
-      $('#output').append($('<p>').text(`Company: ${fields.company.stringValue}`));
-      $('#output').append($('<p>').text(`Doc path: ${data.name}`));
-      $('#output').append($('<p>').text(`Doc URL: ${firestoreEndpoint}/${data.name}`));
-  })
+      })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+          throw data.error.message;
+        }
+        var fields = data.fields;
+        $('#output').append($('<p>').text(`Id: ${userEmail}`));
+        $('#output').append($('<p>').text(`Name: ${fields.name.stringValue}`));
+        $('#output').append($('<p>').text(`Company: ${fields.company.stringValue}`));
+        $('#output').append($('<p>').text(`Doc path: ${data.name}`));
+        $('#output').append($('<p>').text(`Doc URL: ${firestoreEndpoint}/${data.name}`));
+    }))
   .catch(error => {
     console.error(error);
     $('#output').text("Error: " + JSON.stringify(error));

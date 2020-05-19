@@ -12,10 +12,12 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/site/index.html'));
 });
 
+// For GET requests, usually in response to an OAuth/OIDC sign-in
 app.get('/auth-handler', (req, res) => {
   res.render('auth-handler', { post_body: ''});
 });
 
+// For POST requests, usually in response to a SAML sign-in
 app.post('/auth-handler', (req, res) => {
   res.render('auth-handler', { post_body: req.body});
 });

@@ -41,31 +41,31 @@ GcipAuthHelper.prototype.init = function() {
   }
 }
 
-GcipAuthHelper.prototype.signInWithPopup = function(tenantId, providerId) {
+GcipAuthHelper.prototype.signInWithPopup = function(providerId, tenantId) {
   // Get URL of IdP, and open it in a popup
-  this.createAuthUri(tenantId, providerId)  
+  this.createAuthUri(providerId, tenantId)  
   .then(authUriResponse => {
-    this.storeAuthState(tenantId, providerId, authUriResponse.sessionId);
+    this.storeAuthState(providerId, tenantId, authUriResponse.sessionId);
     var popup = window.open(authUriResponse.authUri);
     if(popup !== null && !popup.closed)
       popup.focus();
   });
 }
 
-GcipAuthHelper.prototype.signInWithRedirect = function(tenantId, providerId) {  
+GcipAuthHelper.prototype.signInWithRedirect = function(providerId, tenantId) {  
   // Get URL of IdP, and redirect the browser to it
-  this.createAuthUri(tenantId, providerId)
+  this.createAuthUri(providerId, tenantId)
     .then(authUriResponse => {
-      this.storeAuthState(tenantId, providerId, authUriResponse.sessionId);
+      this.storeAuthState(providerId, tenantId, authUriResponse.sessionId);
       localStorage.setItem('onSuccessfulAuthRedirect', window.location.href);
       window.location.href = authUriResponse.authUri;
     });
 }
 
-GcipAuthHelper.prototype.storeAuthState = function(tenantId, providerId, sessionId) {
+GcipAuthHelper.prototype.storeAuthState = function(providerId, tenantId, sessionId) {
   localStorage.setItem('signInWithIdpParams', JSON.stringify({ 
-    'tenantId' : tenantId,
     'providerId' : providerId,
+    'tenantId' : tenantId,
     'sessionId' : sessionId,
     'authHandlerUrl' : this.authHandlerUrl
   }));
@@ -77,7 +77,7 @@ GcipAuthHelper.prototype.getAuthState = function() {
   return authState;
 }
 
-GcipAuthHelper.prototype.createAuthUri = function(tenantId, providerId) {
+GcipAuthHelper.prototype.createAuthUri = function(providerId, tenantId) {
   // https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/createAuthUri
   const createAuthUriUrl = `${this.identityPlatformBaseUrl}/accounts:createAuthUri?key=${config.apiKey}`;
   const request = {

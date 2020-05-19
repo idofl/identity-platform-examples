@@ -21,9 +21,13 @@
     <meta charset="UTF-8"/>
   </head>
   <body>
-    <h1>Testing Firestore with Identity Platform authentication techniques</h1>
-    <h2>Please choose which tenant you want to use:</h2>
-    <span>
-      <a href="customer-info-gcip-api.html">Customer Service: customer information (sign-in using Google, using Identity Platform APIs)</a>    </span>
+    <h1>Securing Firestore with Identity Platform</h1>
+    
+    <p>Auth handler URL:</p>
+    <p id="authHandlerURL"></p>
+    <script>
+      const url = window.location.href+ "auth-handler";
+      document.getElementById('authHandlerURL').innerText = url;
+    </script>
   </body>
 </html>

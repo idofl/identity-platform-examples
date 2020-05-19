@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-// Identity Platform application setup details.
-// Can be found in Identity Platform's application setup details
-// In the Google Cloud Console.
-const config = {
-  apiKey: 'AIzaSyDEdK1bWF4aff4_4HMuv8vUBgDhgciFJUM',// '{API_KEY}',
-  authDomain: 'test-identityplat2.firebaseapp.com',//'{AUTH_DOMAIN}',
-  projectId: 'test-identityplat2',//'{PROJECT_ID}'
-};
+// [START multi_tenant_cloud_firestore_database_with_identity_platform_firebase_app_setup]
+function configureFirebaseApp(tenant) {
+  firebase.initializeApp(config);
+  if (tenant) {
+    firebase.auth().tenantId = tenant;
+  }
+}
+// [END multi_tenant_cloud_firestore_database_with_identity_platform_firebase_app_setup]

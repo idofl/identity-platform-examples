@@ -18,7 +18,7 @@
 // Can be found in Identity Platform's application setup details
 // In the Google Cloud Console.
 const config = {
-  apiKey: 'AIzaSyDEdK1bWF4aff4_4HMuv8vUBgDhgciFJUM',// '{API_KEY}',
-  authDomain: 'test-identityplat2.firebaseapp.com',//'{AUTH_DOMAIN}',
-  projectId: 'test-identityplat2',//'{PROJECT_ID}'
+  apiKey: 'API_KEY',
+  authDomain: 'AUTH_DOMAIN',
+  projectId: 'PROJECT_ID'
 };

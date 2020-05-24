@@ -27,7 +27,7 @@ gcipAuthHelper.onSignedIn(function(user) {
 });
 
 $('#queryInfo').click(function(event) {
-  showCustomerInformation($('#email').val(), gcipAuthHelper.getIdToken());
+  showCustomerInformation($('#email').val());
 });
 
 $('#sign-out').click(function(event) {
@@ -43,13 +43,15 @@ function showSingIn() {
 
 function showSignOut() {
   $('#logged-in').show();
-  $('#logged-out').hide();  
+  $('#logged-out').hide();
 }
 
-function showCustomerInformation(userEmail, idTokenPromise) {  
+// [START multi_tenant_cloud_firestore_database_with_identity_platform_firestore_rest_api]
+function showCustomerInformation(userEmail) {  
   $('#customer-information').show();
   $('#output').empty();
 
+  idTokenPromise = gcipAuthHelper.getIdToken();
   const firestoreEndpoint = 'https://firestore.googleapis.com/v1';
   const defaultDbPath = `projects/${config.projectId}/databases/(default)/documents`;
   const collectionId = 'customer-service-customers';
@@ -83,6 +85,7 @@ function showCustomerInformation(userEmail, idTokenPromise) {
     $('#output').text("Error: " + JSON.stringify(error));
   });
 }
+// [END multi_tenant_cloud_firestore_database_with_identity_platform_firestore_rest_api]
 
 gcipAuthHelper.init();
 showSingIn();

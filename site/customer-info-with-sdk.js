@@ -28,9 +28,7 @@ $('#signIn').click((event) => {
     console.error(error);
   });
 });
-// [END multi_tenant_cloud_firestore_database_with_identity_platform_firebase_auth_setup]
 
-// [START multi_tenant_cloud_firestore_database_with_identity_platform_firebase_auth_state]
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     $('#logged-out').hide();
@@ -48,11 +46,6 @@ firebase.auth().onAuthStateChanged(function(user) {
     $('#customer-information').hide();
   }
 });
-// [END multi_tenant_cloud_firestore_database_with_identity_platform_firebase_auth_state]
-
-$('#queryInfo').click(function(event) {
-  showCustomerInformation($('#email').val());
-});
 
 $('#sign-out').click(function(event) {
   firebase.auth().signOut().then(function() {
@@ -61,8 +54,13 @@ $('#sign-out').click(function(event) {
     console.error(error);
   });
 });
+// [END multi_tenant_cloud_firestore_database_with_identity_platform_firebase_auth_setup]
 
-// [START multi_tenant_cloud_firestore_database_with_identity_platform_firestore_with_rest]
+$('#queryInfo').click(function(event) {
+  showCustomerInformation($('#email').val());
+});
+
+// [START multi_tenant_cloud_firestore_database_with_identity_platform_firestore_with_sdk]
 function showCustomerInformation(userEmail) {  
   $('#customer-information').show();
   $('#output').empty();
@@ -75,10 +73,10 @@ function showCustomerInformation(userEmail) {
     var fields = doc.data();
     $('#output').append($('<p>').text(`Id: ${doc.id}`));
     $('#output').append($('<p>').text(`Name: ${fields.name}`));
-    $('#output').append($('<p>').text(`Company: ${fields.company}`));    
+    $('#output').append($('<p>').text(`Company: ${fields.company}`));
   }).catch((error) => {
     console.error(error);
     $('#output').text("Error: " + error.toString());
   });
 }
-// [END multi_tenant_cloud_firestore_database_with_identity_platform_firestore_with_rest]
+// [END multi_tenant_cloud_firestore_database_with_identity_platform_firestore_with_sdk]

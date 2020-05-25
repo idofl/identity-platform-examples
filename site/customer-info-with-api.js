@@ -54,7 +54,7 @@ function showCustomerInformation(userEmail) {
   idTokenPromise = gcipAuthHelper.getIdToken();
   const firestoreEndpoint = 'https://firestore.googleapis.com/v1';
   const defaultDbPath = `projects/${config.projectId}/databases/(default)/documents`;
-  const collectionId = 'customer-service-customers';
+  const collectionId = 'customers';
 
   // Call Firestore via its REST API and authenticate with the user's ID token
   idTokenPromise

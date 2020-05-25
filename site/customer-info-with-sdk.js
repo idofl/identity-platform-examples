@@ -66,7 +66,7 @@ function showCustomerInformation(userEmail) {
   $('#output').empty();
 
   const db = firebase.firestore();
-  const collectionId = 'customer-service-customers';
+  const collectionId = 'customers';
 
   query = db.collection(collectionId).doc(userEmail).get();
   query.then((doc) => {

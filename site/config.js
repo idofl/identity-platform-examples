@@ -18,7 +18,7 @@
 // Can be found in Identity Platform's application setup details
 // In the Google Cloud Console.
 const config = {
-  apiKey: 'API_KEY',
-  authDomain: 'AUTH_DOMAIN',
-  projectId: 'PROJECT_ID'
+  apiKey: '[API_KEY]',
+  authDomain: '[AUTH_DOMAIN]',
+  projectId: '[PROJECT_ID]'
 };

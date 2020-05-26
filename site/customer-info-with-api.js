@@ -26,7 +26,7 @@ gcipAuthHelper.onSignedIn(function(user) {
   $('#email').val(user.email);  
 });
 
-$('#queryInfo').click(function(event) {
+$('#query-info').click(function(event) {
   showCustomerInformation($('#email').val());
 });
 
@@ -58,7 +58,8 @@ function showCustomerInformation(userEmail) {
 
   // Call Firestore via its REST API and authenticate with the user's ID token
   idTokenPromise
-  .then(idToken =>
+  .then(idToken => {
+    console.log("JWT Token: " + idToken);
     fetch(
       `${firestoreEndpoint}/${defaultDbPath}/${collectionId}/${userEmail}`,
       {
@@ -79,7 +80,7 @@ function showCustomerInformation(userEmail) {
         $('#output').append($('<p>').text(`Company: ${fields.company.stringValue}`));
         $('#output').append($('<p>').text(`Doc path: ${data.name}`));
         $('#output').append($('<p>').text(`Doc URL: ${firestoreEndpoint}/${data.name}`));
-    }))
+    })})
   .catch(error => {
     console.error(error);
     $('#output').text("Error: " + JSON.stringify(error));

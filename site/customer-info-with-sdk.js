@@ -17,7 +17,7 @@
 configureFirebaseApp();
 
 // [START multi_tenant_cloud_firestore_database_with_identity_platform_firebase_auth_setup]
-$('#signIn').click((event) => {
+$('#sign-in').click((event) => {
   provider = new firebase.auth.GoogleAuthProvider();
   //firebase.auth().signInWithPopup(provider)
   firebase.auth().signInWithRedirect(provider)
@@ -56,7 +56,7 @@ $('#sign-out').click(function(event) {
 });
 // [END multi_tenant_cloud_firestore_database_with_identity_platform_firebase_auth_setup]
 
-$('#queryInfo').click(function(event) {
+$('#query-info').click(function(event) {
   showCustomerInformation($('#email').val());
 });
 

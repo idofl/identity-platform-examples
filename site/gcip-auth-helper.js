@@ -106,7 +106,7 @@ GcipAuthHelper.prototype.createAuthUri = function(providerId, tenantId) {
 // [END multi_tenant_cloud_firestore_database_with_identity_platform_gcip_create_auth_uri]
 
 GcipAuthHelper.prototype.signOut = function() {
-  this.gcipUser = null; 
+  this.gcipUser = null;
 }
 
 // [START multi_tenant_cloud_firestore_database_with_identity_platform_gcip_sign_in_with_idp]
@@ -184,7 +184,7 @@ GcipAuthHelper.prototype.refreshToken = function(refreshToken) {
       }
     )
   .then(response => response.json())
-  .then(data => {    
+  .then(data => {
     this.gcipUser.idToken = data.id_token;
     this.gcipUser.refreshToken = data.refresh_token;
     return this.gcipUser.idToken; 

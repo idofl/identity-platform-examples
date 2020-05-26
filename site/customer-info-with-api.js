@@ -32,6 +32,7 @@ $('#query-info').click(function(event) {
 
 $('#sign-out').click(function(event) {
   gcipAuthHelper.signOut();
+  $('#email').val('');
   showSingIn();
 });
 

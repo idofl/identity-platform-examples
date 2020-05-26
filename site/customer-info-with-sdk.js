@@ -44,6 +44,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     $('#logged-in').hide();
     $('#logged-out').show();
     $('#customer-information').hide();
+    $('#email').val('');
   }
 });
 

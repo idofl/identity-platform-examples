@@ -19,11 +19,11 @@
   <head>
     <title>Customer Service: customer information</title>
     <meta charset="UTF-8"/>
-    <!-- [START multi_tenant_cloud_firestore_database_with_identity_platform_firebase_scripts] -->
+    <!-- [START securing_cloud_firestore_with_identity_platform_firebase_scripts] -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-firestore.js"></script>
-    <!-- [END multi_tenant_cloud_firestore_database_with_identity_platform_firebase_scripts] -->
+    <!-- [END securing_cloud_firestore_with_identity_platform_firebase_scripts] -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="config.js"></script>
     <script src="config-firebase.js"></script>
@@ -38,7 +38,7 @@
     <div class="tab">
       <div id="logged-out">
         <h2>You must sign in to see your customer information</h2>
-        <div><button id="sign-in">Sign in with Google (GCIP library)</button></div>
+        <div><button id="sign-in">Sign in with Google</button></div>
       </div>
       <div id="logged-in">
         <h2>Welcome, <span id="user"></span>!</h2>

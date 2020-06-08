@@ -16,7 +16,7 @@
 
 configureFirebaseApp();
 
-// [START multi_tenant_cloud_firestore_database_with_identity_platform_firebase_auth_setup]
+// [START securing_cloud_firestore_with_identity_platform_firebase_auth_setup]
 $('#sign-in').click((event) => {
   provider = new firebase.auth.GoogleAuthProvider();
   //firebase.auth().signInWithPopup(provider)
@@ -55,13 +55,13 @@ $('#sign-out').click(function(event) {
     console.error(error);
   });
 });
-// [END multi_tenant_cloud_firestore_database_with_identity_platform_firebase_auth_setup]
+// [END securing_cloud_firestore_with_identity_platform_firebase_auth_setup]
 
 $('#query-info').click(function(event) {
   showCustomerInformation($('#email').val());
 });
 
-// [START multi_tenant_cloud_firestore_database_with_identity_platform_firestore_with_sdk]
+// [START securing_cloud_firestore_with_identity_platform_firestore_with_sdk]
 function showCustomerInformation(userEmail) {  
   $('#customer-information').show();
   $('#output').empty();
@@ -80,4 +80,4 @@ function showCustomerInformation(userEmail) {
     $('#output').text("Error: " + error.toString());
   });
 }
-// [END multi_tenant_cloud_firestore_database_with_identity_platform_firestore_with_sdk]
+// [END securing_cloud_firestore_with_identity_platform_firestore_with_sdk]

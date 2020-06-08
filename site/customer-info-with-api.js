@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-const gcipAuthHelper = new GcipAuthHelper(config.apiKey, window.location.href.replace(window.location.pathname,''));
+const authHelper = new IdentityPlatformAuthHelper(config.apiKey, window.location.href.replace(window.location.pathname,''));
 
 $('#sign-in').click((event) => {
-  //gcipAuthHelper.signInWithPopup('google.com');
-  gcipAuthHelper.signInWithRedirect('google.com');
+  //authHelper.signInWithPopup('google.com');
+  authHelper.signInWithRedirect('google.com');
 });
 
-gcipAuthHelper.onSignedIn(function(user) {
+authHelper.onSignedIn(function(user) {
   showSignOut();
   $('#email').val(user.email);  
 });
@@ -31,7 +31,7 @@ $('#query-info').click(function(event) {
 });
 
 $('#sign-out').click(function(event) {
-  gcipAuthHelper.signOut();
+  authHelper.signOut();
   $('#email').val('');
   showSingIn();
 });
@@ -47,12 +47,12 @@ function showSignOut() {
   $('#logged-out').hide();
 }
 
-// [START multi_tenant_cloud_firestore_database_with_identity_platform_firestore_rest_api]
+// [START securing_cloud_firestore_with_identity_platform_firestore_rest_api]
 function showCustomerInformation(userEmail) {  
   $('#customer-information').show();
   $('#output').empty();
 
-  idTokenPromise = gcipAuthHelper.getIdToken();
+  idTokenPromise = authHelper.getIdToken();
   const firestoreEndpoint = 'https://firestore.googleapis.com/v1';
   const defaultDbPath = `projects/${config.projectId}/databases/(default)/documents`;
   const collectionId = 'customers';
@@ -87,7 +87,7 @@ function showCustomerInformation(userEmail) {
     $('#output').text("Error: " + JSON.stringify(error));
   });
 }
-// [END multi_tenant_cloud_firestore_database_with_identity_platform_firestore_rest_api]
+// [END securing_cloud_firestore_with_identity_platform_firestore_rest_api]
 
-gcipAuthHelper.init();
+authHelper.init();
 showSingIn();

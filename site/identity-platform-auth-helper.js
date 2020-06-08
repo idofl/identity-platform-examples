@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-function GcipAuthHelper(apiKey, baseUrl) {
-  this.gcipUser = null;
+function IdentityPlatformAuthHelper(apiKey, baseUrl) {
+  this.user = null;
   this.authHandlerUrl = baseUrl + this.authHandlerPath;
   this.signedInHandler = function() {};
 } 
 
-GcipAuthHelper.prototype.identityPlatformBaseUrl = 'https://identitytoolkit.googleapis.com/v1';
-GcipAuthHelper.prototype.authHandlerPath = '/auth-handler';
+IdentityPlatformAuthHelper.prototype.identityPlatformBaseUrl = 'https://identitytoolkit.googleapis.com/v1';
+IdentityPlatformAuthHelper.prototype.authHandlerPath = '/auth-handler';
 
-GcipAuthHelper.prototype.init = function() {
+IdentityPlatformAuthHelper.prototype.init = function() {
   // Set up for popup notifications
   $(window).on('message', (event) => {
     if (event.originalEvent.origin == window.location.origin) {
@@ -41,7 +41,7 @@ GcipAuthHelper.prototype.init = function() {
   }
 }
 
-GcipAuthHelper.prototype.signInWithPopup = function(providerId, tenantId) {
+IdentityPlatformAuthHelper.prototype.signInWithPopup = function(providerId, tenantId) {
   // Get URL of IdP, and open it in a popup
   this.createAuthUri(providerId, tenantId)
   .then(authUriResponse => {
@@ -52,7 +52,7 @@ GcipAuthHelper.prototype.signInWithPopup = function(providerId, tenantId) {
   });
 }
 
-GcipAuthHelper.prototype.signInWithRedirect = function(providerId, tenantId) {
+IdentityPlatformAuthHelper.prototype.signInWithRedirect = function(providerId, tenantId) {
   // Get URL of IdP, and redirect the browser to it
   this.createAuthUri(providerId, tenantId)
     .then(authUriResponse => {
@@ -62,7 +62,7 @@ GcipAuthHelper.prototype.signInWithRedirect = function(providerId, tenantId) {
     });
 }
 
-GcipAuthHelper.prototype.storeAuthState = function(providerId, tenantId, sessionId) {
+IdentityPlatformAuthHelper.prototype.storeAuthState = function(providerId, tenantId, sessionId) {
   localStorage.setItem('signInWithIdpParams', JSON.stringify({ 
     'providerId' : providerId,
     'tenantId' : tenantId,
@@ -71,14 +71,14 @@ GcipAuthHelper.prototype.storeAuthState = function(providerId, tenantId, session
   }));
 }
 
-GcipAuthHelper.prototype.getAuthState = function() {
+IdentityPlatformAuthHelper.prototype.getAuthState = function() {
   var authState = JSON.parse(localStorage.getItem('signInWithIdpParams'));
   localStorage.removeItem('signInWithIdpParams');
   return authState;
 }
 
-// [START multi_tenant_cloud_firestore_database_with_identity_platform_gcip_create_auth_uri]
-GcipAuthHelper.prototype.createAuthUri = function(providerId, tenantId) {
+// [START securing_cloud_firestore_with_identity_platform_create_auth_uri]
+IdentityPlatformAuthHelper.prototype.createAuthUri = function(providerId, tenantId) {
   // https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/createAuthUri
   const createAuthUriUrl = `${this.identityPlatformBaseUrl}/accounts:createAuthUri?key=${config.apiKey}`;
   const request = {
@@ -103,14 +103,14 @@ GcipAuthHelper.prototype.createAuthUri = function(providerId, tenantId) {
     };
   });
 };
-// [END multi_tenant_cloud_firestore_database_with_identity_platform_gcip_create_auth_uri]
+// [END securing_cloud_firestore_with_identity_platform_create_auth_uri]
 
-GcipAuthHelper.prototype.signOut = function() {
-  this.gcipUser = null;
+IdentityPlatformAuthHelper.prototype.signOut = function() {
+  this.user = null;
 }
 
-// [START multi_tenant_cloud_firestore_database_with_identity_platform_gcip_sign_in_with_idp]
-GcipAuthHelper.prototype.signInWithIdp = function(data) {
+// [START securing_cloud_firestore_with_identity_platform_sign_in_with_idp]
+IdentityPlatformAuthHelper.prototype.signInWithIdp = function(data) {
   authState = this.getAuthState();
   this.authHandlerUrl = authState.authHandlerUrl;
 
@@ -128,7 +128,7 @@ GcipAuthHelper.prototype.signInWithIdp = function(data) {
   if (authState.providerId == 'google.com' || authState.providerId.startsWith('saml.')) {
     request.postBody = `${data}&providerId=${authState.providerId}`;
   } else {
-    throw new Error('This sample script only supports the google.com and SAML providers for GCIP');
+    throw new Error('This sample script only supports the google.com and SAML providers for Identity Platform');
   }
   
   fetch(
@@ -141,28 +141,28 @@ GcipAuthHelper.prototype.signInWithIdp = function(data) {
     )
   .then(response => response.json())
   .then(data => {
-    this.gcipUser = data;
-    this.signedInHandler(this.gcipUser);
+    this.user = data;
+    this.signedInHandler(this.user);
   });
 }
-// [END multi_tenant_cloud_firestore_database_with_identity_platform_gcip_sign_in_with_idp]
+// [END securing_cloud_firestore_with_identity_platform_sign_in_with_idp]
 
-GcipAuthHelper.prototype.isSignedIn = function() {
-    return (this.gcipUser && this.gcipUser.idToken);
+IdentityPlatformAuthHelper.prototype.isSignedIn = function() {
+    return (this.user && this.user.idToken);
 }
 
-// [START multi_tenant_cloud_firestore_database_with_identity_platform_gcip_get_id_token]
-GcipAuthHelper.prototype.getIdToken = function() {
-  var token = this.jwtDecode(this.gcipUser.idToken);
+// [START securing_cloud_firestore_with_identity_platform_get_id_token]
+IdentityPlatformAuthHelper.prototype.getIdToken = function() {
+  var token = this.jwtDecode(this.user.idToken);
 
   // If exp has passed, refresh the token
   if (Date.now() < token.payload.exp * 1000) {
-    return this.refreshToken(this.gcipUser.refreshToken);
+    return this.refreshToken(this.user.refreshToken);
   }
-  return Promise.resolve(this.gcipUser.idToken);
+  return Promise.resolve(this.user.idToken);
 }
 
-GcipAuthHelper.prototype.jwtDecode = function(t) {
+IdentityPlatformAuthHelper.prototype.jwtDecode = function(t) {
   var token = {};
   token.raw = t;
   token.header = JSON.parse(window.atob(t.split('.')[0]));
@@ -170,7 +170,7 @@ GcipAuthHelper.prototype.jwtDecode = function(t) {
   return token;
 }
 
-GcipAuthHelper.prototype.refreshToken = function(refreshToken) {
+IdentityPlatformAuthHelper.prototype.refreshToken = function(refreshToken) {
   // https://cloud.google.com/identity-platform/docs/reference/rest/client#section-refresh-token
   const tokenUrl = `https://securetoken.googleapis.com/v1/token?key=${config.apiKey}`;
   const requestBody = new URLSearchParams(`grant_type=refresh_token&refresh_token=${refreshToken}`);
@@ -185,13 +185,13 @@ GcipAuthHelper.prototype.refreshToken = function(refreshToken) {
     )
   .then(response => response.json())
   .then(data => {
-    this.gcipUser.idToken = data.id_token;
-    this.gcipUser.refreshToken = data.refresh_token;
-    return this.gcipUser.idToken; 
+    this.user.idToken = data.id_token;
+    this.user.refreshToken = data.refresh_token;
+    return this.user.idToken; 
   });
 }
-// [END multi_tenant_cloud_firestore_database_with_identity_platform_gcip_get_id_token]
+// [END securing_cloud_firestore_with_identity_platform_get_id_token]
 
-GcipAuthHelper.prototype.onSignedIn = function(handler) {
+IdentityPlatformAuthHelper.prototype.onSignedIn = function(handler) {
     this.signedInHandler = handler;
 };

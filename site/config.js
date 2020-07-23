@@ -17,6 +17,7 @@
 // Identity Platform application setup details.
 // Can be found in Identity Platform's application setup details
 // In the Google Cloud Console.
+
 const config = {
   apiKey: '[API_KEY]',
   authDomain: '[AUTH_DOMAIN]',

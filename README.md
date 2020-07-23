@@ -1,4 +1,4 @@
-# Sample web app to authenticate Firestore users with Identity Platform
+# Sample web app to authenticate Firestore end users with Identity Platform
 
 Pre-reqs : See the tutorial that accompanies the code example at
 [LINK_OF_THE_PUBLISHED_TUTORIAL_DOC_ONCE_AVAILABLE]:
@@ -9,8 +9,10 @@ The web app supports authenticating with a SAML provider and with a Google provi
 The code demonstrates various way to call Firestore, using the Firestore SDK and the
 Firestore REST APIs.
 
+**DISCLAIMER**: This is not an officially supported Google product.
+
 ## Quickstart
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=URL_OF_THE_GITHUB_REPO&cloudshell_open_in_editor=config.js&cloudshell_working_dir=site)
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=URL_OF_THE_GITHUB_REPO&cloudshell_open_in_editor=site%2Fconfig.js)
 
 
 ## License

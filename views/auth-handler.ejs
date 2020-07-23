@@ -20,16 +20,15 @@
     <title>auth handler</title>
   </head>
   <body>
-  
   </body>
   <script defer>
       var token = '<%- post_body %>';
       if (token == '') {
         token = window.location.hash.substring(1);
       }
-      
+
       // Respond with token based on how we got here (popup/redirect)
-      var redirectUrl = localStorage.getItem('onSuccessfulAuthRedirect');
+      const redirectUrl = localStorage.getItem('onSuccessfulAuthRedirect');
       if (redirectUrl) {
         localStorage.removeItem('onSuccessfulAuthRedirect');
         localStorage.setItem('authResponse', token)

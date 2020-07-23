@@ -18,7 +18,7 @@ function IdentityPlatformAuthHelper(apiKey, baseUrl) {
   this.user = null;
   this.authHandlerUrl = baseUrl + this.authHandlerPath;
   this.signedInHandler = function() {};
-} 
+}
 
 IdentityPlatformAuthHelper.prototype.identityPlatformBaseUrl = 'https://identitytoolkit.googleapis.com/v1';
 IdentityPlatformAuthHelper.prototype.authHandlerPath = '/auth-handler';
@@ -46,7 +46,7 @@ IdentityPlatformAuthHelper.prototype.signInWithPopup = function(providerId, tena
   this.createAuthUri(providerId, tenantId)
   .then(authUriResponse => {
     this.storeAuthState(providerId, tenantId, authUriResponse.sessionId);
-    var popup = window.open(authUriResponse.authUri);
+    const popup = window.open(authUriResponse.authUri);
     if(popup !== null && !popup.closed)
       popup.focus();
   });
@@ -63,7 +63,7 @@ IdentityPlatformAuthHelper.prototype.signInWithRedirect = function(providerId, t
 }
 
 IdentityPlatformAuthHelper.prototype.storeAuthState = function(providerId, tenantId, sessionId) {
-  localStorage.setItem('signInWithIdpParams', JSON.stringify({ 
+  localStorage.setItem('signInWithIdpParams', JSON.stringify({
     'providerId' : providerId,
     'tenantId' : tenantId,
     'sessionId' : sessionId,
@@ -72,7 +72,7 @@ IdentityPlatformAuthHelper.prototype.storeAuthState = function(providerId, tenan
 }
 
 IdentityPlatformAuthHelper.prototype.getAuthState = function() {
-  var authState = JSON.parse(localStorage.getItem('signInWithIdpParams'));
+  const authState = JSON.parse(localStorage.getItem('signInWithIdpParams'));
   localStorage.removeItem('signInWithIdpParams');
   return authState;
 }
@@ -101,6 +101,9 @@ IdentityPlatformAuthHelper.prototype.createAuthUri = function(providerId, tenant
       "authUri" : data.authUri,
       "sessionId" : data.sessionId
     };
+  })
+  .catch(error => {
+    console.error(error);
   });
 };
 // [END securing_cloud_firestore_with_identity_platform_create_auth_uri]
@@ -130,7 +133,7 @@ IdentityPlatformAuthHelper.prototype.signInWithIdp = function(data) {
   } else {
     throw new Error('This sample script only supports the google.com and SAML providers for Identity Platform');
   }
-  
+
   fetch(
       signInWithIdpUrl,
       {
@@ -143,6 +146,9 @@ IdentityPlatformAuthHelper.prototype.signInWithIdp = function(data) {
   .then(data => {
     this.user = data;
     this.signedInHandler(this.user);
+  })
+  .catch(error => {
+    console.error(error);
   });
 }
 // [END securing_cloud_firestore_with_identity_platform_sign_in_with_idp]
@@ -153,7 +159,7 @@ IdentityPlatformAuthHelper.prototype.isSignedIn = function() {
 
 // [START securing_cloud_firestore_with_identity_platform_get_id_token]
 IdentityPlatformAuthHelper.prototype.getIdToken = function() {
-  var token = this.jwtDecode(this.user.idToken);
+  const token = this.jwtDecode(this.user.idToken);
 
   // If exp has passed, refresh the token
   if (Date.now() < token.payload.exp * 1000) {
@@ -163,7 +169,7 @@ IdentityPlatformAuthHelper.prototype.getIdToken = function() {
 }
 
 IdentityPlatformAuthHelper.prototype.jwtDecode = function(t) {
-  var token = {};
+  const token = {};
   token.raw = t;
   token.header = JSON.parse(window.atob(t.split('.')[0]));
   token.payload = JSON.parse(window.atob(t.split('.')[1]));
@@ -187,7 +193,10 @@ IdentityPlatformAuthHelper.prototype.refreshToken = function(refreshToken) {
   .then(data => {
     this.user.idToken = data.id_token;
     this.user.refreshToken = data.refresh_token;
-    return this.user.idToken; 
+    return this.user.idToken;
+  })
+  .catch(error => {
+    console.error(error);
   });
 }
 // [END securing_cloud_firestore_with_identity_platform_get_id_token]

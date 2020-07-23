@@ -62,7 +62,7 @@
     idTokenPromise
     .then(idToken => {
       console.log(`JWT Token: ${idToken}`);
-      fetch(
+      return fetch(
         `${firestoreEndpoint}/${defaultDbPath}/${collectionId}/${userEmail}`,
         {
           headers: {
@@ -71,18 +71,19 @@
           contentType: 'application/json',
           method: 'GET'
         })
-      .then(response => response.json())
-      .then(data => {
-          if (data.error) {
-            throw data.error.message;
-          }
-          var fields = data.fields;
-          $('#output').append($('<p>').text(`Id: ${userEmail}`));
-          $('#output').append($('<p>').text(`Name: ${fields.name.stringValue}`));
-          $('#output').append($('<p>').text(`Company: ${fields.company.stringValue}`));
-          $('#output').append($('<p>').text(`Doc path: ${data.name}`));
-          $('#output').append($('<p>').text(`Doc URL: ${firestoreEndpoint}/${data.name}`));
-      })})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+          throw data.error.message;
+        }
+        var fields = data.fields;
+        $('#output').append($('<p>').text(`Id: ${userEmail}`));
+        $('#output').append($('<p>').text(`Name: ${fields.name.stringValue}`));
+        $('#output').append($('<p>').text(`Company: ${fields.company.stringValue}`));
+        $('#output').append($('<p>').text(`Doc path: ${data.name}`));
+        $('#output').append($('<p>').text(`Doc URL: ${firestoreEndpoint}/${data.name}`));
+    })
     .catch(error => {
       console.error(error);
       $('#output').text("Error: " + JSON.stringify(error));

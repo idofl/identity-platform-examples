@@ -28,7 +28,7 @@
     <b><p id="hostName"></p></b>
     <script>
       const hostName = window.location.hostname;
-      const url = window.location.href+ "auth-handler";
+      const url = window.location.href.replace(window.location.search, '') + "auth-handler";
       document.getElementById('authHandlerURL').innerText = url;
       document.getElementById('hostName').innerText = hostName;
     </script>

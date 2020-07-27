@@ -162,7 +162,7 @@ IdentityPlatformAuthHelper.prototype.getIdToken = function() {
   const token = this.jwtDecode(this.user.idToken);
 
   // If exp has passed, refresh the token
-  if (Date.now() < token.payload.exp * 1000) {
+  if (Date.now() > token.payload.exp * 1000) {
     return this.refreshToken(this.user.refreshToken);
   }
   return Promise.resolve(this.user.idToken);

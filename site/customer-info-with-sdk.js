@@ -18,8 +18,13 @@
   configureFirebaseApp();
 
   // [START securing_cloud_firestore_with_identity_platform_firebase_auth_setup]
-  $('#sign-in').click((event) => {
-    provider = new firebase.auth.GoogleAuthProvider();
+
+  $('#sign-in-adfs').click((event) => {
+    provider = new firebase.auth.SAMLAuthProvider('saml.adfs');
+    signInWithRedirect(provider);
+  });
+
+  function signInWithRedirect(provider) {
     //firebase.auth().signInWithPopup(provider)
     firebase.auth().signInWithRedirect(provider)
     .then((result) => {
@@ -28,8 +33,7 @@
     .catch((error) => {
       console.error(error);
     });
-  });
-
+  }
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       $('#logged-out').hide();

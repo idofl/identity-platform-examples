@@ -17,9 +17,8 @@
 (function () {
   const authHelper = new IdentityPlatformAuthHelper(config.apiKey, window.location.href.replace(window.location.pathname,''));
 
-  $('#sign-in').click((event) => {
-    //authHelper.signInWithPopup('google.com');
-    authHelper.signInWithRedirect('google.com');
+  $('#sign-in-adfs').click((event) => {    
+    authHelper.signInWithRedirect('saml.adfs');
   });
 
   authHelper.onSignedIn(function(user) {
